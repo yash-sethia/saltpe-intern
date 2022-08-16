@@ -9,10 +9,10 @@ const { errorHandler } = require('../helper/error');
 exports.registerController = (req, res) => {
   const { name, email, password } = req.body;
   const errors = validationResult(req);
-
+  console.log("Cp1")
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({
+    return res.json({
       errors: firstError,
       success: false
     });
@@ -22,19 +22,21 @@ exports.registerController = (req, res) => {
       email
     }).exec((err, user) => {
       if (user) {
-        return res.status(400).json({
+        console.log("Cp2")
+        return res.status(200).json({
           errors: 'Email is taken',
           success: false
         });
       } else {
         // Create a new user
+        console.log("Cp3")
         const newUser = new User({name, email, password});
         newUser.save()
         .then(() => res.status(200).json({
             userData: newUser, 
             success: true
         }))
-        .catch(err => res.status(400).json({
+        .catch(err => res.json({
             success: false,
             errors: errorHandler(err)
         }));
@@ -47,22 +49,26 @@ exports.registerController = (req, res) => {
 exports.signinController = (req, res) => {
   const { email, password } = req.body;
 
-  
+  console.log("cp1");
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    console.log(errors.array());
+    console.log("cp2");
     const firstError = errors.array().map(error => error.msg)[0];
-    return res.status(422).json({
+    console.log("Um : ", firstError);
+    return res.json({
       errors: firstError,
       success: false
     });
   } else {
-    
+    console.log("cp3");
     // check if user exist
     User.findOne({
       email
     }).exec((err, user) => {
       if (err || !user) {
+        console.log("cp3.1");
         return res.json({
           errors: 'User with that email does not exist. Please signup',
           success: false
@@ -70,12 +76,13 @@ exports.signinController = (req, res) => {
       }
       // authenticate
       if (password !== user.password) {
+        console.log("cp4");
         return res.json({
           errors: 'Email and password do not match',
           success: false
         });
       }
-
+      console.log("cp5");
       return res.json({
         user: user,
         errors: "",

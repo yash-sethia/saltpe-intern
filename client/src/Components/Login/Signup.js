@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useNavigate, NavLink } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -23,6 +24,7 @@ const theme = createTheme();
 export default function SignUp() {
 
   const [ errorMessage, setErrorMessage ] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,12 +32,12 @@ export default function SignUp() {
     
     const newUser = {
         name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password')
+        email: data.get('email'),
+        password: data.get('password')
     };
     axios.post('/api/users/register', newUser).then(res => {
-      // console.log("Hello Success ", res);
-      if(!res.success) {
+      console.log("Hello Success ", res);
+      if(!res.data.success) {
         setErrorMessage("ERROR: " + res.data.errors);
         setTimeout(
           function() {
@@ -44,6 +46,8 @@ export default function SignUp() {
       }
       else {
         // Successful Login
+        console.log("Hello there :)")
+        navigate("/login");
       }
     })
     .catch(err => {
@@ -52,7 +56,7 @@ export default function SignUp() {
           function() {
             setErrorMessage("");
           }, 5000);
-      // console.log("Error : ", err)
+      console.log("Error : ", err)
     });
   };
 
