@@ -1,0 +1,71 @@
+.header-parent-div {
+    position: relative;
+    height: 60px;
+}
+.header-logo {
+    float: left;
+    height: 30px;
+    padding: 2% 5%;
+}
+
+.header-options {
+    position: absolute;
+    width: 65%;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header-options a {
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    padding: 6% 4%;
+}
+
+.header-login-btn {
+    padding: 20px 5%;
+}
+
+.header-login-btn button {
+    float: right;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 16px;
+    height: 40px;
+    width: 90px;
+    border-radius: 5px;
+
+}
+
+.header-login-btn button:hover {
+    cursor: pointer;
+}
+
+.header-logout-btn {
+    padding: 20px 5%;
+}
+
+.header-logout-btn button {
+    float: right;
+    background-color: transparent;
+    border: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 16px;
+    height: 40px;
+    width: 90px;
+    border-radius: 5px;
+}
+
+.header-logout-btn button:hover {
+    cursor: pointer;
+}

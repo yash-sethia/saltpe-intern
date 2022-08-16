@@ -1,0 +1,32 @@
+.home {
+    background-image: url('../../images/bg-img2-svg.svg');
+    /* Full height */
+    height: 85%;
+    margin-top: -2%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    position: relative;
+}
+
+.home-main-heading {
+    position: absolute;
+    color: black;
+    font-family: 'Arial';
+    font-size: 56px;
+    z-index: 5;
+    text-align: left;
+    bottom: 0%;
+    margin-left: 5%;
+}
+
+.home-side-heading {
+    color: #b7b7b7;
+    font-family: 'Arial';
+    font-size: 20px;
+    text-align: right;
+    margin-right: 5%;
+    margin-top: 2%;
+    padding-top: 3%;
+}
