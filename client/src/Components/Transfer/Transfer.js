@@ -142,11 +142,6 @@ function Transfer(props) {
         </div>
 
         <div id="main" >
-        { errorMessage.length > 0 &&
-            <Stack sx={{ width: '100%' }} spacing={2}>
-                <Alert severity="error">{errorMessage}</Alert>
-            </Stack> 
-            } 
             <Grid container>
             <Grid item xs={4} component={Paper} elevation={6} square style={{margin: 'auto'}}>
             <Box
