@@ -1,6 +1,8 @@
 const {
-    check
+    check,
+    param
 } = require('express-validator');
+
 
 exports.validSign = [
     check('name', 'Name is required').notEmpty()
@@ -66,5 +68,14 @@ exports.userSendMoneyValidator = [
         check('amount')
             .isFloat({min: 0})
             .withMessage("Amount must be a positive value")
+
+];
+
+exports.validTransactionHistory = [
+    param('accountNo')
+        .not()
+        .isEmpty()
+        .isLength({ min: 16, max: 16})
+        .withMessage("Account No. must be 16 digits long")
 
 ];

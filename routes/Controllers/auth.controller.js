@@ -1,4 +1,5 @@
 const User = require('../../models/user.model');
+const Transaction = require('../../models/transactions.model');
 
 // const fetch = require('node-fetch');
 
@@ -94,4 +95,48 @@ exports.signinController = (req, res) => {
       });
     });
   }
+};
+
+exports.userTransactionHistory = (req, res) => {
+  const { accountNo } = req.params;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    console.log("cp2");
+    const firstError = errors.array().map(error => error.msg)[0];
+    console.log("Um : ", firstError);
+    return res.json({
+      errors: firstError,
+      success: false
+    });
+  } else {
+    Transaction.find({sender: accountNo}).sort({created_at: 'desc'}).exec((err, debitTransactions) => {
+      if(debitTransactions) {
+        Transaction.find({receiver: accountNo}).sort({created_at: 'desc'}).exec((err, creditTransactions) => {
+          if(creditTransactions) {
+
+            return res.status(200).json({
+              success: true,
+              debit: debitTransactions,
+              credit: creditTransactions
+            });
+
+          } else {
+            return res.json({
+              errors: 'Error in finding credt transactions.',
+              success: false
+            });
+          }
+        })
+      } else {
+        return res.json({
+          errors: 'Error in finding debit transactions.',
+          success: false
+        });
+      }
+    })
+  }
+
 };

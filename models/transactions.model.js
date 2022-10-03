@@ -19,7 +19,10 @@ const transactionsSchema = new Schema({
             type: Number,
             required: true
         },
-        created_at: { type: Date }
+        created_at: { 
+            type: Date,
+            default: Date.now()
+        }
     }
 );
 
