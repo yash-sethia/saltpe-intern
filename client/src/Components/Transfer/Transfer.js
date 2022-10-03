@@ -35,13 +35,25 @@ function Transfer(props) {
         navigate("/");
     };
 
+    const amountIsValid = (str) => {
+        str = str.trim();
+        if (!str) {
+            return false;
+        }
+        str = str.replace(/^0+/, "") || "0";
+        var n = Math.floor(Number(str));
+        if(n !== Infinity && String(n) === str) return n;
+        
+        return -1;
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Submit clicked");
 
         const data = new FormData(event.currentTarget);
         const transfer_detail = {
-            amount: data.get('amount'),
+            amount: amountIsValid(data.get('amount')),
             to: data.get('to')
         };
 

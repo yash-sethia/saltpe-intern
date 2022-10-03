@@ -49,3 +49,22 @@ exports.resetPasswordValidator = [
         .withMessage('Password must be at least  6 characters long')
         .matches(/\d/).withMessage('password must contain a number')
 ];
+
+exports.userSendMoneyValidator = [
+    check('to')
+        .not()
+        .isEmpty()
+        .isLength({ min: 16, max: 16})
+        .withMessage("Receiver's account No. must be 16 digits long"),
+
+        check('from')
+            .not()
+            .isEmpty()
+            .isLength({ min: 16, max: 16})
+            .withMessage("Sender's account No. must be 16 digits long"),
+
+        check('amount')
+            .isFloat({min: 0})
+            .withMessage("Amount must be a positive value")
+
+];
