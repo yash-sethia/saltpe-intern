@@ -20,6 +20,23 @@ const userSchema = new Schema({
             type: String,
             required: true,
             minlength: 6
+        },
+        accountNo: {
+            type: String,
+            required: true,
+            minlength: 16,
+            maxlength: 16,
+            unique: true
+        },
+        role: {
+            type: String,
+            required: true,
+            defualt: "user",
+        },
+        balance: {
+            type: Number,
+            default: 0,
+            min: 0,
         }
     }
 );

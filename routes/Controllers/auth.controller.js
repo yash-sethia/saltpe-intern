@@ -29,8 +29,10 @@ exports.registerController = (req, res) => {
         });
       } else {
         // Create a new user
-        console.log("Cp3")
-        const newUser = new User({name, email, password});
+        console.log("Cp3");
+        const accountNo = (Math.random() + ' ').substring(2,10)+(Math.random() + ' ').substring(2,10);
+        User.findOne({accountNo}).exec
+        const newUser = new User({name, email, password, accountNo});
         newUser.save()
         .then(() => res.status(200).json({
             userData: newUser, 

@@ -22,39 +22,9 @@ connection.once('open', () => {
 const userRouter = require("./routes/user");
 const otpRouter = require("./routes/otp");
 
-// const taskRouter = require('./routes/tasks');
-// const usersRouter = require('./routes/users');
-// const articleRouter = require('./routes/articles');
-// const reviewsRouter = require('./routes/reviews');
-// const profileRouter = require('./routes/profile');
-// const engagementRouter = require('./routes/engagement');
-// const taskAnalyticsRouter = require('./routes/taskAnalytics'); 
-// const adduserdata = require('./routes/adduserdata');
-// const reviewmore = require('./routes/reviewmore');
-// const reviewarticle = require('./routes/reviewArticle');
-// const reviewmorearticle = require('./routes/reviewMoreArticle');
-// const getReviews = require('./routes/getReviews');
-// const overallAnalytics = require('./routes/overallAnalytics');
-// const recentTransactions = require('./routes/recentTransactions');
-// const portfolioArticle = require('./routes/portfolioArticle');
-
 // //Backend routes to begin with api
 app.use('/api/users', userRouter);
 app.use('/api/otps', otpRouter);
-// app.use('/api/users', usersRouter);
-// app.use('/api/articles', articleRouter);
-// app.use('/api/reviews', reviewsRouter);
-// app.use('/api/profile', profileRouter);
-// app.use('/api/enagagement', engagementRouter);
-// app.use('/api/taskAnalytics', taskAnalyticsRouter);
-// app.use('/api/adduserdata', adduserdata);
-// app.use('/api/reviewmore', reviewmore);
-// app.use('/api/reviewarticle', reviewarticle);
-// app.use('/api/reviewMoreArticle', reviewmorearticle);
-// app.use('/api/getreviews', getReviews);
-// app.use('/api/overallAnalytics', overallAnalytics);
-// app.use('/api/recentTransactions', recentTransactions);
-// app.use('/api/portfolioArticle', portfolioArticle);
 
 
 app.listen(port, () => {

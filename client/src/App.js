@@ -7,6 +7,8 @@ import ForgetPassword from './Components/Login/ForgetPassword'
 import ForgetPasswordEmail from './Components/Login/ResetPasswordEmail';
 import Dashboard from './Components/Dashboard/dashboard'
 import {Routes, Route} from 'react-router-dom';
+import Transactions from './Components/Transactions/Transactions'
+import Transfer from './Components/Transfer/Transfer'
 import UserRoute from './UserRoute';
 import './App.css';
 
@@ -22,9 +24,9 @@ const App = ({isAuthenticated}) => {
         <Route path="/forgetPassword" element={<ForgetPassword />}/>
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/dashboard" element={
-            <UserRoute>
-              <Dashboard />
-            </UserRoute>
+            // <UserRoute>
+              <Transfer />
+            // </UserRoute>
           }/>
       </Routes>
     </div>

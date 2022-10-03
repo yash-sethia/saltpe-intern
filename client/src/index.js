@@ -12,6 +12,7 @@ import rootReducer from './rootReducer';
 import {userLoggedIn} from "./actions/auth";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
