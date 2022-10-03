@@ -41,7 +41,12 @@ function Dashboard(props) {
                     <div className="closebtn" onClick={() => setVisible(false)}>&times;</div>
                     <div className='active'>Home</div>
                     <div>Transactions</div>
-                    <div>Trasfer</div>
+                    <div onClick={() => {
+                        console.log("clicked...");
+                        navigate("/user-transfer");
+                    }}>
+                        Trasfer
+                    </div>
                     <div onClick={() => logout()}>Logout</div>
                 </div>
 
@@ -56,12 +61,13 @@ function Dashboard(props) {
 
         <div id="main" >
             <Grid container spacing={2}>
-                <Grid item sm={6} md={6}>
-                    <Card sx={{ maxWidth: 345 }} style={{margin: 'auto'}}>
+            <Grid item sm={2} md={2}></Grid>
+                <Grid item sm={4} md={4}>
+                    <Card sx={{ maxWidth: 450 }} style={{margin: 'auto'}}>
                         <CardActionArea>
                             <CardMedia
                             component="img"
-                            height="140"
+                            height="200"
                             image={card}
                             alt="green iguana"
                             />
@@ -70,18 +76,18 @@ function Dashboard(props) {
                                 Account Number
                             </Typography>
                             <Typography variant="h5" component="div">
-                                123456789876543
+                                {props.user.user.accountNo}
                             </Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
                 </Grid>
-                <Grid item sm={6} md={6}>
-                <Card sx={{ maxWidth: 345 }} style={{margin: 'auto'}}>
+                <Grid item sm={4} md={4}>
+                <Card sx={{ maxWidth: 450 }} style={{margin: 'auto'}}>
                         <CardActionArea>
                             <CardMedia
                             component="img"
-                            height="140"
+                            height="200"
                             image={cash}
                             alt="green iguana"
                             />
@@ -90,12 +96,13 @@ function Dashboard(props) {
                                 Account Balance
                             </Typography>
                             <Typography variant="h5" component="div">
-                                $5035.75
+                                $ {props.user.user.balance}
                             </Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
                 </Grid>
+                <Grid item sm={2} md={2}></Grid>
             </Grid>
         </div>
 

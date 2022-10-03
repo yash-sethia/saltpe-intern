@@ -58,8 +58,14 @@ export default function Login() {
       else {
         // Successful Login
         localStorage.email = checkUser.email;
+        const redux_user = {
+          email: res.data.user.email,
+          role: res.data.user.role,
+          accountNo: res.data.user.accountNo,
+          balance: res.data.user.balance
+        }
         // console.log("cp1");
-        dispatch(userLoggedIn(checkUser));
+        dispatch(userLoggedIn(redux_user));
         // console.log("cp2");
         navigate("/dashboard");
       }

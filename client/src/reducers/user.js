@@ -4,6 +4,8 @@ export default function user(state={}, action={}){
             return action.user;
         case 'USER_LOGGED_OUT':
             return {};
+        case 'USER_BALANCE_UPDATE':
+            return action.user
         default:
             return state;
     }

@@ -5,7 +5,7 @@ import logo from '../../images/logo1.png';
 import '../Dashboard/dashboard.css';
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
-import {userLoggedOut} from '../../actions/auth';
+import {userLoggedOut, userBalanceUpdated} from '../../actions/auth';
 import MenuIcon from '@mui/icons-material/Menu';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -18,12 +18,15 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
+import axios from 'axios';
+
 
 import SendIcon from '@mui/icons-material/Send';
 
 function Transfer(props) {
     const [visible, setVisible] = React.useState(false);
     const [ errorMessage, setErrorMessage ] = React.useState("");
+    const [ textMessage, setTextMessage ] = React.useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
@@ -53,16 +56,54 @@ function Transfer(props) {
 
         const data = new FormData(event.currentTarget);
         const transfer_detail = {
+            from: props.user.user.accountNo,
             amount: amountIsValid(data.get('amount')),
             to: data.get('to')
         };
 
         // Make a call to backend
+
+        axios.post('/api/transaction/userSendMoney', transfer_detail).then(res => {
+
+            //console.log(res);
+            if(!res.data.success) {
+                setErrorMessage("ERROR: " + res.data.errors);
+                setTimeout(
+                function() {
+                    setErrorMessage("");
+                }, 5000);
+            }
+            else {
+                setTextMessage("Transfer successful!! Redirecting you to Dashboard...");
+                const redux_user = {
+                    email: props.user.user.email,
+                    role: props.user.user.role,
+                    accountNo: props.user.user.accountNo,
+                    balance: props.user.user.balance - transfer_detail.amount
+                  }
+                setTimeout(
+                    function() {
+                        setErrorMessage("");
+                        dispatch(userBalanceUpdated(redux_user));
+                        navigate("/dashboard");
+                    }, 5000);
+            }
+
+        })
+        .catch(err => {
+            setErrorMessage("ERROR: Unknown error occured!!");
+        setTimeout(
+          function() {
+            setErrorMessage("");
+          }, 5000);
+        })
       
     }
 
   return (
     <div>
+
+        
         
         <header>
             <div className='header-parent-div'>
@@ -83,6 +124,18 @@ function Transfer(props) {
                 </div>
             </div>
         </header>
+
+        { errorMessage.length > 0 &&
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="error">{errorMessage}</Alert>
+            </Stack> 
+        } 
+
+        { textMessage.length > 0 &&
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="success">{textMessage}</Alert>
+            </Stack>     
+        } 
 
         <div style={{textAlign: 'center'}}>
             <h2>Transfer Money</h2>

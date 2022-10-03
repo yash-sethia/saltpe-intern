@@ -6,6 +6,11 @@ export const userLoggedOut = () => ({
     type: 'USER_LOGGED_OUT',
 })
 
+export const userBalanceUpdated = (user) => ({
+    type: 'USER_BALANCE_UPDATE',
+    user
+})
+
 
 // export const login = (credentials) => dispatch =>
 //     api.user.login(credentials).then(user => {
