@@ -38,10 +38,12 @@ exports.registerController = (req, res) => {
             userData: newUser, 
             success: true
         }))
-        .catch(err => res.json({
+        .catch(err => {
+          return res.json({
             success: false,
             errors: errorHandler(err)
-        }));
+        });
+      });
       }
     });
   }

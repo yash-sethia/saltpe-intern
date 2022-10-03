@@ -21,7 +21,7 @@ exports.userSendMoney = (req, res) => {
 
     
 
-    const newTransaction = new Transaction({sender: to, receiver: from, amount: pasrseInt(amount)});
+    const newTransaction = new Transaction({sender: to, receiver: from, amount: amount});
     newTransaction.save().then(() => {
         // User is present
         User.findOne({
@@ -29,15 +29,15 @@ exports.userSendMoney = (req, res) => {
         }).exec((err_send, sender) => {
             if (sender) {
                 // Sender exists
-                if(sender.balance >= parseInt(amount)) {
+                if(sender.balance >= amount) {
         
                 User.findOne({accountNo: to}).exec((err_receive, receiver) => {
                     if(receiver) {
                         // Both sender and receiver exist
-                        receiver.balance += parseInt(amount);
+                        receiver.balance += amount;
                         receiver.save()
                         .then(() => {
-                            sender.balance -= parseInt(amount);
+                            sender.balance -= amount;
 
                             sender.save()
                             .then(() => res.status(200).json({

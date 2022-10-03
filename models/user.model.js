@@ -30,8 +30,7 @@ const userSchema = new Schema({
         },
         role: {
             type: String,
-            required: true,
-            defualt: "user",
+            default: "user",
         },
         balance: {
             type: Number,

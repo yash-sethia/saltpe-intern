@@ -10,7 +10,7 @@ const {
     userSendMoneyValidator
 } = require('./helper/valid');
 
-router.post('/userSendMoney', userSendMoney, userSendMoney);
+router.post('/userSendMoney', userSendMoneyValidator, userSendMoney);
 
 
 module.exports = router;
