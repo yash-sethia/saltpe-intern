@@ -3,7 +3,7 @@ import { Route, Redirect, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Login from './Components/Login/Login';
 
-const UserRoute = ({ isAuthenticated, children }) => {
+const AdminRoute = ({ isAuthenticated, children }) => {
     // console.log("Hii there: ", isAuthenticated)
     if (!isAuthenticated) {
       return <Navigate to="/login" replace />;
@@ -13,7 +13,7 @@ const UserRoute = ({ isAuthenticated, children }) => {
   };
 
 function mapStateToProps(state){
-    if(state.user.email && state.user.role == "user") {
+    if(state.user.email && state.user.role == "admin") {
         return{
             isAuthenticated: true
         };
@@ -22,4 +22,4 @@ function mapStateToProps(state){
         isAuthenticated: false
     };
 }
-export default connect(mapStateToProps)(UserRoute);
+export default connect(mapStateToProps)(AdminRoute);

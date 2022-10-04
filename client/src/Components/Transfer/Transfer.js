@@ -109,11 +109,17 @@ function Transfer(props) {
         <header>
             <div className='header-parent-div'>
 
-                <div id="mySidenav" className="sidenav" style={{width: visible ? '250px': '0'}}>
+            <div id="mySidenav" className="sidenav" style={{width: visible ? '250px': '0'}}>
                     <div className="closebtn" onClick={() => setVisible(false)}>&times;</div>
-                    <div>Home</div>
-                    <div>Transactions</div>
-                    <div className='active'>Trasfer</div>
+                    <div onClick={() => navigate("/dashboard")}>Home</div>
+                    <div onClick={() => navigate("/user-transactions")}>
+                        Transactions
+                    </div>
+                    <div className='active' onClick={() => {
+                        navigate("/user-transfer");
+                    }}>
+                        Trasfer
+                    </div>
                     <div onClick={() => logout()}>Logout</div>
                 </div>
 

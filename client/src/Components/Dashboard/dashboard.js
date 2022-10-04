@@ -39,12 +39,11 @@ function Dashboard(props) {
 
                 <div id="mySidenav" className="sidenav" style={{width: visible ? '250px': '0'}}>
                     <div className="closebtn" onClick={() => setVisible(false)}>&times;</div>
-                    <div className='active'>Home</div>
+                    <div className='active' onClick={() => navigate("/dashboard")}>Home</div>
                     <div onClick={() => navigate("/user-transactions")}>
                         Transactions
                     </div>
                     <div onClick={() => {
-                        console.log("clicked...");
                         navigate("/user-transfer");
                     }}>
                         Trasfer

@@ -10,6 +10,7 @@ import {Routes, Route} from 'react-router-dom';
 import Transactions from './Components/Transactions/Transactions'
 import Transfer from './Components/Transfer/Transfer'
 import UserRoute from './UserRoute';
+import AdminRoute from './AdminRoute'
 import AdminHome from './Components/Admin Home/AdminHome';
 import AdminUsers from './Components/Admin Users/AdminUsers';
 import AdminTransaction from './Components/Admin Transaction/AdminTransaction';
@@ -29,25 +30,43 @@ const App = ({isAuthenticated}) => {
         <Route path="/forgetPassword" element={<ForgetPassword />}/>
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/dashboard" element={
-            // <UserRoute>
-              <AdminUsers />
-            // </UserRoute> 
+             <UserRoute>
+              <Dashboard />
+             </UserRoute> 
           }/>
         <Route path="/user-transfer" element={
-            // <UserRoute>
+             <UserRoute>
               <Transfer />
-            // </UserRoute>
+             </UserRoute>
           }/>
         <Route path="/user-transactions" element={
-            // <UserRoute>
+             <UserRoute>
               <Transactions />
-            // </UserRoute>
+             </UserRoute>
           }/>
 
-        <Route path="/admin-create-user-form" element={
-            // <UserRoute>
+        <Route path="/admin-home" element={
+             <AdminRoute>
+              <AdminHome />
+             </AdminRoute>
+          }/>
+
+        <Route path="/admin-users" element={
+             <AdminRoute>
+              <AdminUsers />
+             </AdminRoute>
+        }/>
+
+        <Route path="/admin-transaction" element={
+             <AdminRoute>
+              <AdminTransaction />
+             </AdminRoute>
+        }/>
+
+          <Route path="/admin-create-user-form" element={
+             <AdminRoute>
               <AdminCreateUserForm />
-            // </UserRoute>
+             </AdminRoute>
           }/>
       </Routes>
 

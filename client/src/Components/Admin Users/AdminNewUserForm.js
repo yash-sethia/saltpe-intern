@@ -83,7 +83,7 @@ function AdminCreateUserForm(props) {
                 setTimeout(
                     function() {
                         setTextMessage("");
-                        navigate("/dashboard");
+                        navigate("/admin-users");
                     }, 5000);
             }
 
@@ -108,9 +108,13 @@ function AdminCreateUserForm(props) {
 
                 <div id="mySidenav" className="sidenav" style={{width: visible ? '250px': '0'}}>
                     <div className="closebtn" onClick={() => setVisible(false)}>&times;</div>
-                    <div>Home</div>
-                    <div>Transactions</div>
-                    <div className='active'>Trasfer</div>
+                    <div onClick={() => navigate("/admin-home")}> Home </div>
+                    <div className='active' onClick={() => navigate("/admin-users")}>
+                        Users
+                    </div>
+                    <div onClick={() => navigate("/admin-transaction")}>
+                        Debit / Credit
+                    </div>
                     <div onClick={() => logout()}>Logout</div>
                 </div>
 

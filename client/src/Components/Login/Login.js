@@ -69,7 +69,11 @@ export default function Login() {
         // console.log("cp1");
         dispatch(userLoggedIn(redux_user));
         // console.log("cp2");
-        navigate("/dashboard");
+        if(redux_user.role === "user") {
+          navigate("/dashboard");
+        } else {
+          navigate("/admin-home");
+        }
       }
     })
     .catch(err => {
