@@ -22,11 +22,13 @@ connection.once('open', () => {
 const userRouter = require("./routes/user");
 const otpRouter = require("./routes/otp");
 const transactionRouter = require("./routes/transaction");
+const adminRouter = require("./routes/admin");
 
 // //Backend routes to begin with api
 app.use('/api/users', userRouter);
 app.use('/api/otps', otpRouter); 
 app.use('/api/transaction', transactionRouter);
+app.use('/api/admin', adminRouter); 
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

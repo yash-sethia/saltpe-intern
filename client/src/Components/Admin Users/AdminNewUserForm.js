@@ -13,18 +13,20 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 import axios from 'axios';
 
 
 import SendIcon from '@mui/icons-material/Send';
 
-function Transfer(props) {
+function AdminCreateUserForm(props) {
     const [visible, setVisible] = React.useState(false);
+    const [type, setType] = React.useState("debit");
     const [ errorMessage, setErrorMessage ] = React.useState("");
     const [ textMessage, setTextMessage ] = React.useState("");
     const navigate = useNavigate();
@@ -37,6 +39,10 @@ function Transfer(props) {
         dispatch(userLoggedOut());
         navigate("/");
     };
+
+    const handleChange = (event) => {
+        setType(event.target.value);
+      };
 
     const amountIsValid = (str) => {
         str = str.trim();
@@ -56,15 +62,13 @@ function Transfer(props) {
 
         const data = new FormData(event.currentTarget);
         const transfer_detail = {
-            from: props.user.user.accountNo,
-            amount: amountIsValid(data.get('amount')),
-            to: data.get('to'),
-            name: data.get("name")
+            name: data.get('name'),
+            balance: amountIsValid(data.get('balance')),
+            email: data.get('email'),
+            accountNo: data.get('accountNo'),
         };
 
-        // Make a call to backend
-
-        axios.post('/api/transaction/userSendMoney', transfer_detail).then(res => {
+        axios.post("/api/admin/admin-create-user", transfer_detail).then(res => {
 
             //console.log(res);
             if(!res.data.success) {
@@ -76,16 +80,9 @@ function Transfer(props) {
             }
             else {
                 setTextMessage("Transfer successful!! Redirecting you to Dashboard...");
-                const redux_user = {
-                    email: props.user.user.email,
-                    role: props.user.user.role,
-                    accountNo: props.user.user.accountNo,
-                    balance: props.user.user.balance - transfer_detail.amount
-                  }
                 setTimeout(
                     function() {
                         setTextMessage("");
-                        dispatch(userBalanceUpdated(redux_user));
                         navigate("/dashboard");
                     }, 5000);
             }
@@ -93,11 +90,11 @@ function Transfer(props) {
         })
         .catch(err => {
             setErrorMessage("ERROR: Unknown error occured!!");
-        setTimeout(
-          function() {
-            setErrorMessage("");
-          }, 5000);
-        })
+            setTimeout(
+            function() {
+                setErrorMessage("");
+            }, 5000);
+            })
       
     }
 
@@ -155,11 +152,11 @@ function Transfer(props) {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <SendIcon />
+                    <GroupAddIcon />
                 </Avatar>
 
                 <Typography component="h1" variant="h5">
-                    Transfer Money
+                    Create New User Form
                 </Typography>
 
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -167,17 +164,8 @@ function Transfer(props) {
                     margin="normal"
                     required
                     fullWidth
-                    id="to"
-                    label="Reciever's Account No."
-                    name="to"
-                    autoComplete="to"
-                    autoFocus
-                />
-                <TextField
-                    margin="normal"
-                    fullWidth
                     id="name"
-                    label="Reciever's Name"
+                    label="Name"
                     name="name"
                     autoComplete="name"
                     autoFocus
@@ -186,10 +174,30 @@ function Transfer(props) {
                     margin="normal"
                     required
                     fullWidth
-                    name="amount"
-                    label="Amount (in $)"
+                    id="email"
+                    label="Email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="accountNo"
+                    label="Account No."
+                    name="accountNo"
+                    autoComplete="accountNo"
+                    autoFocus
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="balance"
+                    label="Balance (in $)"
                     type="number"
-                    id="amount"
+                    id="balance"
                 />
                 <Button
                     type="submit"
@@ -197,7 +205,7 @@ function Transfer(props) {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                 >
-                    Send
+                    Create User
                 </Button>
                 </Box>
             </Box>
@@ -213,4 +221,4 @@ const mapStateToProps = state => {
         user: state
     };
 };
-export default connect(mapStateToProps)(Transfer);
+export default connect(mapStateToProps)(AdminCreateUserForm);

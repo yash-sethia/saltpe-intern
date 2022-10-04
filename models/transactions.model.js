@@ -6,14 +6,10 @@ const transactionsSchema = new Schema({
         sender: {
             type: String,
             required: true,
-            minlength: 16,
-            maxlength: 16,
         },
         receiver: {
             type: String,
             required: true,
-            minlength: 16,
-            maxlength: 16
         },
         amount: {
             type: Number,

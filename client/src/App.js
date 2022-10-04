@@ -10,6 +10,11 @@ import {Routes, Route} from 'react-router-dom';
 import Transactions from './Components/Transactions/Transactions'
 import Transfer from './Components/Transfer/Transfer'
 import UserRoute from './UserRoute';
+import AdminHome from './Components/Admin Home/AdminHome';
+import AdminUsers from './Components/Admin Users/AdminUsers';
+import AdminTransaction from './Components/Admin Transaction/AdminTransaction';
+import AdminCreateUserForm from './Components/Admin Users/AdminNewUserForm';
+
 import './App.css';
 
 import {connect} from 'react-redux';
@@ -25,7 +30,7 @@ const App = ({isAuthenticated}) => {
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/dashboard" element={
             // <UserRoute>
-              <Dashboard />
+              <AdminUsers />
             // </UserRoute> 
           }/>
         <Route path="/user-transfer" element={
@@ -38,7 +43,15 @@ const App = ({isAuthenticated}) => {
               <Transactions />
             // </UserRoute>
           }/>
+
+        <Route path="/admin-create-user-form" element={
+            // <UserRoute>
+              <AdminCreateUserForm />
+            // </UserRoute>
+          }/>
       </Routes>
+
+
     </div>
   );
 }

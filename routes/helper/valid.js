@@ -79,3 +79,47 @@ exports.validTransactionHistory = [
         .withMessage("Account No. must be 16 digits long")
 
 ];
+
+exports.adminTransactionValidator = [
+    check("type")
+        .isBoolean()
+        .withMessage("Invalid type of transaction requested"),
+    
+    check("accountNo")
+        .not()
+        .isEmpty()
+        .isLength({ min: 16, max: 16})
+        .withMessage("Account No. must be 16 digits long"),
+
+    check("amount")
+        .isFloat({min: 0})
+        .withMessage("Amount must be a positive value")
+
+];
+
+exports.adminCreateUserValidator = [
+    check("name")
+        .not()
+        .isEmpty()
+        .isLength({min: 3, max: 32})
+        .withMessage("User name must be between 3 to 32 characters long"),
+
+    check("balance")
+        .not()
+        .isEmpty()
+        .isFloat({min: 0})
+        .withMessage("Balance must be greater or equal to 0"),
+
+    check("accountNo")
+        .not()
+        .isEmpty()
+        .isLength({ min: 16, max: 16})
+        .withMessage("Account No. must be 16 digits long"),
+
+    check('email')
+        .not()
+        .isEmpty()
+        .isEmail()
+        .withMessage('Must be a valid email address')
+        
+];
