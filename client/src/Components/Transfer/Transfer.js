@@ -58,7 +58,8 @@ function Transfer(props) {
         const transfer_detail = {
             from: props.user.user.accountNo,
             amount: amountIsValid(data.get('amount')),
-            to: data.get('to')
+            to: data.get('to'),
+            name: data.get("name")
         };
 
         // Make a call to backend
@@ -137,9 +138,9 @@ function Transfer(props) {
             </Stack>     
         } 
 
-        <div style={{textAlign: 'center'}}>
+        {/* <div style={{textAlign: 'center'}}>
             <h2>Transfer Money</h2>
-        </div>
+        </div> */}
 
         <div id="main" >
             <Grid container>
@@ -170,6 +171,15 @@ function Transfer(props) {
                     label="Reciever's Account No."
                     name="to"
                     autoComplete="to"
+                    autoFocus
+                />
+                <TextField
+                    margin="normal"
+                    fullWidth
+                    id="name"
+                    label="Reciever's Name"
+                    name="name"
+                    autoComplete="name"
                     autoFocus
                 />
                 <TextField

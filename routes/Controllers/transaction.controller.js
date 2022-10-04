@@ -8,7 +8,7 @@ const { errorHandler } = require('../helper/error');
 
 
 exports.userSendMoney = (req, res) => {
-  const { to, from, amount } = req.body;
+  const { to, from, amount, name } = req.body;
   const errors = validationResult(req);
  
   if (!errors.isEmpty()) {
@@ -21,7 +21,7 @@ exports.userSendMoney = (req, res) => {
 
     
 
-    const newTransaction = new Transaction({sender: to, receiver: from, amount: amount});
+    const newTransaction = new Transaction({sender: to, receiver: from, amount: amount, name: name});
     newTransaction.save().then(() => {
         // User is present
         User.findOne({

@@ -116,7 +116,7 @@ exports.userTransactionHistory = (req, res) => {
       if(debitTransactions) {
         Transaction.find({receiver: accountNo}).sort({created_at: 'desc'}).exec((err, creditTransactions) => {
           if(creditTransactions) {
-
+            console.log("Lesssgoooo");
             return res.status(200).json({
               success: true,
               debit: debitTransactions,

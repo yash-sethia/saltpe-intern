@@ -19,6 +19,9 @@ const transactionsSchema = new Schema({
             type: Number,
             required: true
         },
+        name: {
+            type: String
+        },
         created_at: { 
             type: Date,
             default: Date.now()

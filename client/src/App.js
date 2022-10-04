@@ -26,11 +26,16 @@ const App = ({isAuthenticated}) => {
         <Route path="/dashboard" element={
             // <UserRoute>
               <Dashboard />
-            // </UserRoute>
+            // </UserRoute> 
           }/>
         <Route path="/user-transfer" element={
             // <UserRoute>
               <Transfer />
+            // </UserRoute>
+          }/>
+        <Route path="/user-transactions" element={
+            // <UserRoute>
+              <Transactions />
             // </UserRoute>
           }/>
       </Routes>

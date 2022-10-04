@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../Header/header.css';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../images/logo1.png';
@@ -15,11 +15,82 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+
+import axios from 'axios';
 
 function Transactions(props) {
     const [visible, setVisible] = React.useState(false);
+    const [transaction_data, setTransactionData] = React.useState([]);
+    const [ errorMessage, setErrorMessage ] = React.useState("");
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        axios.get(`/api/users/${props.user.user.accountNo}`)
+          .then(res => {
+            if(!res.data.success) {
+                setErrorMessage("ERROR: " + res.data.errors);
+                setTimeout(
+                  function() {
+                    setErrorMessage("");
+                  }, 5000);
+              }
+              else {
+                let i = 0;
+                let j = 0;
+                let k = 0;
+                console.log("Res = ", res.data);
+                console.log("Hello from loops = ", new Date(res.data.credit[i].created_at))
+                let temp_data = new Array(res.data.credit.length + res.data.debit.length);
+                while(i < res.data.credit.length && j < res.data.debit.length) {
+                    if(new Date(res.data.credit[i].created_at) >  new Date(res.data.debit[j].created_at)) {
+                        temp_data[k] = (
+                            createData(res.data.credit[i]._id, false, res.data.credit[i].name || "-Not Mentioned-", res.data.credit[i].amount, res.data.credit[i].sender, new Date(res.data.credit[i].created_at).toISOString().substring(0, 10))
+                        );
+                        i += 1;
+                        k += 1;
+                    } else {
+                        temp_data[k] = (
+                            createData(res.data.debit[j]._id, true, res.data.debit[j].name || "-Not Mentioned-", res.data.debit[j].amount, res.data.debit[j].sender, new Date(res.data.debit[j].created_at).toISOString().substring(0, 10))
+                        );
+                        j += 1;
+                        k += 1;
+                    }
+                }
+
+                while(i < res.data.credit.length) {
+                    temp_data[k] = (
+                        createData(res.data.credit[i]._id, false, res.data.credit[i].name || "-Not Mentioned-", res.data.credit[i].amount, res.data.credit[i].sender, new Date(res.data.credit[i].created_at).toISOString().substring(0, 10))
+                    );
+                    i += 1;
+                    k += 1;
+                }
+
+                while(j < res.data.debit.length) {
+                    temp_data[k] = (
+                        createData(res.data.debit[j]._id, true, res.data.debit[j].name || "-Not Mentioned-", res.data.debit[j].amount, res.data.debit[j].sender, new Date(res.data.debit[j].created_at).toISOString().substring(0, 10))
+                    );
+                    j += 1;
+                    k += 1;
+                }
+
+                console.log("Success : ", temp_data);
+
+                setTransactionData(temp_data);
+              }
+          })
+          .catch(err => {
+            console.log("Error: Inside catch", err)
+            setErrorMessage("ERROR: Unknown Error occured");
+                setTimeout(
+                  function() {
+                    setErrorMessage("");
+                  }, 5000);
+          });
+      }, []);
     
     console.log("Props: ", props.user);
     const logout = () => {
@@ -33,15 +104,6 @@ function Transactions(props) {
         return { id, debit, name, amount, from, date };
       }
       
-      const rows = [
-        createData(1, true, "Yash", "$200", "1234567898765432", "20/09/2022"),
-        createData(2, false,  "Yash", "$200", "1234567898765432", "20/09/2022"),
-        createData(3, true,  "Yash", "$200", "1234567898765432", "20/09/2022"),
-        createData(4, true,  "Yash", "$200", "1234567898765432", "20/09/2022"),
-        createData(5, false,  "Yash", "$200", "1234567898765432", "20/09/2022"),
-        createData(6, true,  "Yash", "$200", "1234567898765432", "20/09/2022"),
-      ];
-
   return (
     <div>
         <header>
@@ -64,6 +126,12 @@ function Transactions(props) {
             </div>
         </header>
 
+        { errorMessage.length > 0 &&
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="error">{errorMessage}</Alert>
+            </Stack> 
+        } 
+
         <div style={{textAlign: 'center'}}>
             <h2>Transaction History</h2>
         </div>
@@ -77,12 +145,12 @@ function Transactions(props) {
                             <h2>Amount</h2>
                         </TableCell>
                         <TableCell align="right"><h2>Name</h2></TableCell>
-                        <TableCell align="right"><h2>From</h2></TableCell>
+                        <TableCell align="right"><h2>To or From</h2></TableCell>
                         <TableCell align="right"><h2>Date</h2></TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {rows.map((row) => (
+                    {transaction_data.map((row) => (
                         <TableRow
                         key={row.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
