@@ -72,11 +72,11 @@ exports.userSendMoneyValidator = [
 ];
 
 exports.validTransactionHistory = [
-    param('accountNo')
+    param('email')
         .not()
         .isEmpty()
-        .isLength({ min: 16, max: 16})
-        .withMessage("Account No. must be 16 digits long")
+        .isEmail()
+        .withMessage('Must be a valid email address')
 
 ];
 

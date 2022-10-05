@@ -19,7 +19,7 @@ const store = createStore(
 );
 
 if(localStorage.email) {
-  const user ={email: localStorage.email, role: localStorage.role, accountNo: localStorage.accountNo};
+  const user ={email: localStorage.email, role: localStorage.role};
   store.dispatch(userLoggedIn(user));
 }
 

@@ -98,7 +98,7 @@ exports.signinController = (req, res) => {
 };
 
 exports.userTransactionHistory = (req, res) => {
-  const { accountNo } = req.params;
+  const { email } = req.params;
 
   const errors = validationResult(req);
 
@@ -112,31 +112,43 @@ exports.userTransactionHistory = (req, res) => {
       success: false
     });
   } else {
-    Transaction.find({sender: accountNo}).sort({created_at: 'desc'}).exec((err, debitTransactions) => {
-      if(debitTransactions) {
-        Transaction.find({receiver: accountNo}).sort({created_at: 'desc'}).exec((err, creditTransactions) => {
-          if(creditTransactions) {
-            console.log("Lesssgoooo");
-            return res.status(200).json({
-              success: true,
-              debit: debitTransactions,
-              credit: creditTransactions
-            });
-
+    User.findOne({email: email}).exec((errUserFind, user) => {
+      if(user) {
+        const accountNo = user.accountNo;
+        Transaction.find({sender: accountNo}).sort({created_at: 'desc'}).exec((err, debitTransactions) => {
+          if(debitTransactions) {
+            Transaction.find({receiver: accountNo}).sort({created_at: 'desc'}).exec((err, creditTransactions) => {
+              if(creditTransactions) {
+                console.log("Lesssgoooo");
+                return res.status(200).json({
+                  success: true,
+                  debit: debitTransactions,
+                  credit: creditTransactions
+                });
+    
+              } else {
+                return res.json({
+                  errors: 'Error in finding credt transactions.',
+                  success: false
+                });
+              }
+            })
           } else {
             return res.json({
-              errors: 'Error in finding credt transactions.',
+              errors: 'Error in finding debit transactions.',
               success: false
             });
           }
         })
+
       } else {
         return res.json({
-          errors: 'Error in finding debit transactions.',
+          errors: 'Error in finding the user information.',
           success: false
         });
       }
     })
+   
   }
 
 };

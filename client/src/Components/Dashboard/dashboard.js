@@ -37,6 +37,7 @@ function Dashboard(props) {
     const logout = () => {
         console.log("Log Out!!");
         localStorage.removeItem('email');
+        localStorage.removeItem('role');
         dispatch(userLoggedOut());
         navigate("/");
     };

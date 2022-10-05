@@ -20,7 +20,7 @@ router.post('/register', validSign, registerController);
 
 router.post('/login', validLogin, signinController)
 
-router.get('/:accountNo', validTransactionHistory, userTransactionHistory);
+router.get('/:email', validTransactionHistory, userTransactionHistory);
 
 router.post('/user-data', validUserData, userData);
 module.exports = router;

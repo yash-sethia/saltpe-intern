@@ -29,7 +29,7 @@ function Transactions(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get(`/api/users/${props.user.user.accountNo}`)
+        axios.get(`/api/users/${props.user.user.email}`)
           .then(res => {
             if(!res.data.success) {
                 setErrorMessage("ERROR: " + res.data.errors);
@@ -96,6 +96,7 @@ function Transactions(props) {
     const logout = () => {
         console.log("Log Out!!");
         localStorage.removeItem('email');
+        localStorage.removeItem('role');
         dispatch(userLoggedOut());
         navigate("/");
     };
