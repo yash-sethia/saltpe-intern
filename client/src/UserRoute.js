@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Login from './Components/Login/Login';
 
 const UserRoute = ({ isAuthenticated, children }) => {
+    
     // console.log("Hii there: ", isAuthenticated)
     if (!isAuthenticated) {
       return <Navigate to="/login" replace />;
@@ -13,6 +14,7 @@ const UserRoute = ({ isAuthenticated, children }) => {
   };
 
 function mapStateToProps(state){
+    console.log("From User Route: ", state);
     if(state.user.email && state.user.role == "user") {
         return{
             isAuthenticated: true

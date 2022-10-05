@@ -18,8 +18,8 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-if(localStorage.JWT){
-  const user ={email:localStorage.email};
+if(localStorage.email) {
+  const user ={email: localStorage.email, role: localStorage.role, accountNo: localStorage.accountNo};
   store.dispatch(userLoggedIn(user));
 }
 

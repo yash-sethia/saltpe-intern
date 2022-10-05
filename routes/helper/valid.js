@@ -123,3 +123,11 @@ exports.adminCreateUserValidator = [
         .withMessage('Must be a valid email address')
         
 ];
+
+exports.validUserData = [
+    check("email")
+        .not()
+        .isEmpty()
+        .isEmail()
+        .withMessage('Must be a valid email address')
+];

@@ -60,6 +60,8 @@ export default function Login() {
       else {
         // Successful Login
         localStorage.email = checkUser.email;
+        localStorage.role = res.data.user.role;
+        localStorage.accountNo = res.data.user.accountNo;
         const redux_user = {
           email: res.data.user.email,
           role: res.data.user.role,

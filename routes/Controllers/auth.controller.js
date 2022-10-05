@@ -140,3 +140,32 @@ exports.userTransactionHistory = (req, res) => {
   }
 
 };
+
+
+exports.userData = (req, res) => {
+  const { email } = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    console.log("cp2");
+    const firstError = errors.array().map(error => error.msg)[0];
+    console.log("Um : ", firstError);
+    return res.json({
+      errors: firstError,
+      success: false
+    });
+  } else {
+    User.findOne({email: email}).exec((err, user) => {
+      if(user) {
+        return res.status(200).json({success: true, user: user});
+      } else {
+        return res.json({
+          errors: 'Error in finding user.',
+          success: false
+        });
+      }
+    });
+  }
+};

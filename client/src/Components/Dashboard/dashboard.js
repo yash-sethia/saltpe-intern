@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../Header/header.css';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../images/logo1.png';
@@ -16,12 +16,22 @@ import { CardActionArea } from '@mui/material';
 
 import card from '../../images/card.png';
 import cash from '../../images/cash.png';
+
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+
+
+import axios from 'axios';
   
 
 function Dashboard(props) {
     const [visible, setVisible] = React.useState(false);
+    const [ errorMessage, setErrorMessage ] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [accountNo, setAccountNo] = React.useState("");
+    const [balance, setBalance] = React.useState(0);
     
     console.log("Props: ", props.user);
     const logout = () => {
@@ -30,6 +40,33 @@ function Dashboard(props) {
         dispatch(userLoggedOut());
         navigate("/");
     };
+
+
+    useEffect(() => {
+        const email = {email: localStorage.email};
+        console.log(email)
+        axios.post("/api/users/user-data", email)
+          .then(res => {
+                if(!res.data.success) {
+                    setErrorMessage("ERROR: " + res.data.errors);
+                    setTimeout(
+                    function() {
+                        setErrorMessage("");
+                    }, 5000);
+                } else {
+                    setAccountNo(res.data.user.accountNo);
+                    setBalance(res.data.user.balance);
+                }
+            })
+          .catch(err => {
+            console.log("Error: Inside catch", err)
+            setErrorMessage("ERROR: Unknown Error occured");
+                setTimeout(
+                  function() {
+                    setErrorMessage("");
+                  }, 5000);
+          });
+      }, []);
 
 
   return (
@@ -60,6 +97,12 @@ function Dashboard(props) {
             </div>
         </header>
 
+        { errorMessage.length > 0 &&
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="error">{errorMessage}</Alert>
+            </Stack> 
+            } 
+
         <div id="main" >
             <Grid container spacing={2}>
             <Grid item sm={2} md={2}></Grid>
@@ -77,7 +120,7 @@ function Dashboard(props) {
                                 Account Number
                             </Typography>
                             <Typography variant="h5" component="div">
-                                {props.user.user.accountNo}
+                                {accountNo}
                             </Typography>
                             </CardContent>
                         </CardActionArea>
@@ -97,7 +140,7 @@ function Dashboard(props) {
                                 Account Balance
                             </Typography>
                             <Typography variant="h5" component="div">
-                                $ {props.user.user.balance}
+                                $ {balance}
                             </Typography>
                             </CardContent>
                         </CardActionArea>
